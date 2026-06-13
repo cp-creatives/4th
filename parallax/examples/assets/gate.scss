@@ -1,0 +1,135 @@
+$rose: #e63e56;
+$rose-soft: #ff7a92;
+$rose-deep: #9e1b3d;
+$rose-pale: #fff5f7;
+$rose-blush: #ffc9d4;
+
+.gate-body {
+  align-items: center;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.7) 0%, transparent 45%),
+    radial-gradient(circle at 80% 85%, rgba(255, 182, 198, 0.5) 0%, transparent 40%),
+    linear-gradient(165deg, $rose-pale 0%, $rose-blush 50%, #ffb3c1 100%);
+  box-sizing: border-box;
+  color: $rose-deep;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  min-height: 100dvh;
+  min-height: 100svh;
+  padding: 1.5rem;
+  transition: opacity 0.55s ease;
+
+  &.is-leaving {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.gate {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba($rose, 0.22);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 50px rgba($rose-deep, 0.12),
+    0 0 0 6px rgba(255, 255, 255, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  max-width: 380px;
+  padding: 2.25rem 1.75rem 2rem;
+  text-align: center;
+  width: 100%;
+
+  &__hearts {
+    color: $rose-soft;
+    font-size: 1.35rem;
+    letter-spacing: 0.35em;
+    line-height: 1;
+    margin: 0 0 1rem;
+  }
+
+  &__question {
+    color: $rose-deep;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.75rem, 6.5vw, 2.25rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 1.75rem;
+  }
+
+  &__form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    width: 100%;
+  }
+
+  &__input {
+    background: $rose-pale;
+    border: 2px solid rgba($rose, 0.2);
+    border-radius: 999px;
+    box-sizing: border-box;
+    color: $rose-deep;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    max-width: 280px;
+    outline: none;
+    padding: 0.9rem 1.35rem;
+    text-align: center;
+    width: 100%;
+
+    &::placeholder {
+      color: rgba($rose-deep, 0.35);
+    }
+
+    &:focus {
+      border-color: $rose;
+      box-shadow: 0 0 0 4px rgba($rose, 0.15);
+    }
+  }
+
+  &__submit {
+    background: linear-gradient(135deg, $rose 0%, $rose-soft 100%);
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba($rose, 0.35);
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    max-width: 280px;
+    padding: 0.9rem 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+
+    &:hover {
+      box-shadow: 0 10px 24px rgba($rose, 0.45);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &__error {
+    color: $rose;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    margin: 1rem 0 0;
+    min-height: 1.25rem;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+}

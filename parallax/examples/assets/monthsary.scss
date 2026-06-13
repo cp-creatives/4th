@@ -1,0 +1,748 @@
+// Monthsary — static sky + parallax tiled layers (native 320×240 frame)
+
+$accent: #d4b8ff;
+$bg-fallback: #1a0a28;
+$frame-w: 320;
+$frame-h: 240;
+$parallax-bottom-bleed: clamp(48px, 12vmin, 72px);
+$parallax-bottom-bleed-trees: clamp(56px, 15vmin, 80px);
+$cloud-scroll-duration: 140s;
+$quote-word-stagger: 0.28s;
+$quote-word-duration: 1.15s;
+$quote-word-lead-duration: 8s;
+$quote-word-lead-gap: 5s;
+
+.monthsary-body {
+  background: $bg-fallback;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  margin: 0;
+  min-height: 100dvh;
+  overflow: hidden;
+
+  &.is-entering {
+    opacity: 0;
+    transition: opacity 0.75s ease;
+
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+
+  &.is-reveal-pending {
+    .sky-static,
+    .monthsary,
+    .polaroid-layer,
+    .tap-reveal {
+      filter: blur(14px);
+      transition: filter 0.85s ease;
+    }
+  }
+}
+
+// --- quote splash (blurred intro before full scene) ---
+
+.quote-splash {
+  align-items: center;
+  background: rgba(12, 6, 22, 0.35);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  padding: 2rem 1.5rem;
+  position: fixed;
+  top: 0;
+  transition: opacity 0.85s ease;
+  width: 100vw;
+  z-index: 35;
+  pointer-events: none;
+
+  &[hidden] {
+    display: none !important;
+  }
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: none;
+
+    &.is-tap-ready {
+      pointer-events: auto;
+    }
+  }
+
+  &.is-leaving {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__slides {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 5.5rem;
+    position: relative;
+    width: min(52rem, 96vw);
+  }
+
+  &__text {
+    color: #fff;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.95rem, 2.9vw, 1.7rem);
+    font-style: italic;
+    font-weight: 400;
+    left: 0;
+    line-height: 1.55;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65);
+    transition: opacity 1s ease;
+    white-space: nowrap;
+    width: 100%;
+
+    &.is-active {
+      opacity: 1;
+    }
+
+    &.is-leaving {
+      opacity: 0;
+    }
+
+    .quote-splash__word {
+      display: inline-block;
+      opacity: 0;
+    }
+
+    &.is-active .quote-splash__word {
+      animation: quote-word-in $quote-word-duration ease-out forwards;
+      animation-delay: calc(var(--word-i) * #{$quote-word-stagger});
+    }
+
+    &.is-active .quote-splash__word--lead {
+      animation-duration: $quote-word-lead-duration;
+      animation-delay: 0s;
+    }
+
+    &.is-active.quote-splash__text--slow-lead .quote-splash__word:not(.quote-splash__word--lead) {
+      animation-delay: calc(#{$quote-word-lead-gap} + (var(--word-i) - 1) * #{$quote-word-stagger});
+    }
+  }
+
+  @keyframes quote-word-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.2em);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__hint {
+    color: rgba(255, 255, 255, 0.45);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    margin: 1.75rem 0 0;
+    text-transform: lowercase;
+  }
+}
+
+// --- static sky (fixed, tiled) ---
+
+.sky-static {
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 0;
+
+  &__track {
+    background-image: var(--tile);
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    bottom: 0;
+    height: calc(100vw * #{$frame-h} / #{$frame-w});
+    height: min(calc(100vw * #{$frame-h} / #{$frame-w}), 100dvh);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    left: -5%;
+    max-height: 100dvh;
+    position: absolute;
+    width: 110%;
+  }
+}
+
+// --- stage: native 4:3 band anchored to bottom ---
+
+.monthsary {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 1;
+
+}
+
+.stage {
+  height: calc(100vw * #{$frame-h} / #{$frame-w});
+  height: min(calc(100vw * #{$frame-h} / #{$frame-w}), 100dvh);
+  isolation: isolate;
+  margin: 0 auto;
+  max-height: 100dvh;
+  max-width: 100vw;
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
+}
+
+// --- parallax scene ---
+
+.scene {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.layer {
+  height: 100%;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  will-change: transform;
+
+  &--trees-1 { z-index: 4; }
+  &--trees-2 { z-index: 5; }
+  &--trees-3 { z-index: 6; }
+
+  &--myst {
+    opacity: 0.85;
+    z-index: 3;
+  }
+}
+
+// One repeated background per layer instead of many <img> tiles
+
+.tile-strip {
+  background-image: var(--tile);
+  background-position: left bottom;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  bottom: calc(-1 * #{$parallax-bottom-bleed});
+  height: calc(100% + #{$parallax-bottom-bleed});
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  left: -12%;
+  pointer-events: none;
+  position: absolute;
+  width: 124%;
+
+  &--trees {
+    bottom: calc(-1 * #{$parallax-bottom-bleed-trees});
+    height: calc(100% + #{$parallax-bottom-bleed-trees});
+  }
+
+  &--wide {
+    left: -18%;
+    width: 136%;
+  }
+}
+
+.layer--blend .tile-strip,
+.layer--mountains .tile-strip,
+.layer--trees .tile-strip {
+  mix-blend-mode: lighten;
+}
+
+// Far + near clouds — slow continuous drift to the right (seamless tile loop)
+
+.tile-strip--far-clouds,
+.tile-strip--near-clouds {
+  animation: clouds-scroll-right $cloud-scroll-duration linear infinite;
+  will-change: background-position;
+}
+
+// Far clouds drift a touch slower so the layers feel separated
+.tile-strip--far-clouds {
+  animation-duration: calc(#{$cloud-scroll-duration} * 1.35);
+}
+
+@keyframes clouds-scroll-right {
+  from {
+    background-position: -100vw bottom;
+  }
+
+  to {
+    background-position: 0 bottom;
+  }
+}
+
+// --- polaroid overlay (outside parallax — clicks always work) ---
+
+.polaroid-layer {
+  bottom: 0;
+  height: calc(100vw * #{$frame-h} / #{$frame-w});
+  height: min(calc(100vw * #{$frame-h} / #{$frame-w}), 100dvh);
+  left: 0;
+  margin: 0 auto;
+  max-height: 100dvh;
+  max-width: 100vw;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  width: 100vw;
+  z-index: 25;
+}
+
+.polaroid-group {
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  will-change: transform;
+}
+
+.polaroid {
+  -webkit-tap-highlight-color: transparent;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  margin: 0;
+  padding: 4px 4px 14px;
+  animation: polaroid-swing var(--swing-duration, 5s) ease-in-out var(--swing-delay, 0s) infinite;
+  pointer-events: auto;
+  position: absolute;
+  touch-action: manipulation;
+  transform-origin: 50% 100%;
+  transition: box-shadow 0.2s ease;
+  width: 72px;
+  will-change: transform;
+
+  // Bigger invisible tap target
+  &::before {
+    content: '';
+    inset: -14px;
+    position: absolute;
+  }
+
+  &:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent;
+    outline-offset: 3px;
+  }
+
+  &__img {
+    aspect-ratio: 1;
+    background-image: var(--photo, none);
+    background-position: center;
+    background-size: cover;
+    display: block;
+    width: 100%;
+  }
+
+  &.is-placeholder {
+    background: rgba(255, 255, 255, 0.3);
+    min-height: 64px;
+
+    .polaroid__img {
+      display: none;
+    }
+  }
+
+  &--1 {
+    bottom: 13%;
+    left: 8%;
+    width: 56px;
+  }
+
+  &--2 {
+    bottom: 23%;
+    right: 10%;
+    width: 54px;
+  }
+
+  &--3 {
+    bottom: 4%;
+    left: 62%;
+    width: 62px;
+  }
+
+  &--4 {
+    bottom: 18%;
+    left: 22%;
+    width: 58px;
+  }
+
+  &--5 {
+    bottom: 7%;
+    left: 31%;
+    width: 52px;
+  }
+
+  &--6 {
+    bottom: 14%;
+    left: 48%;
+    width: 54px;
+  }
+
+  &--7 {
+    bottom: 21%;
+    left: 2%;
+    width: 50px;
+  }
+
+  &--8 {
+    bottom: 4%;
+    right: 7%;
+    width: 56px;
+  }
+
+  &--9 {
+    bottom: 17%;
+    right: 27%;
+    width: 52px;
+  }
+
+  &--10 {
+    bottom: 10%;
+    left: 76%;
+    width: 58px;
+  }
+}
+
+@keyframes polaroid-swing {
+  0%,
+  100% {
+    transform: rotate(calc((var(--swing-base) - var(--swing-amount) * var(--swing-phase)) * 1deg));
+  }
+
+  50% {
+    transform: rotate(calc((var(--swing-base) + var(--swing-amount) * var(--swing-phase)) * 1deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .polaroid {
+    animation: none;
+    transform: rotate(calc(var(--swing-base) * 1deg));
+  }
+}
+
+// --- polaroid popup (center + flip to message) ---
+
+.polaroid-modal {
+  align-items: center;
+  display: flex;
+  height: 100dvh;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: opacity 0.45s ease;
+  visibility: hidden;
+  width: 100vw;
+  z-index: 50;
+
+  &[hidden] {
+    display: none !important;
+  }
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  &__backdrop {
+    background: rgba(8, 4, 16, 0.82);
+    border: none;
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &__panel {
+    position: relative;
+    transform: scale(0.88) translateY(16px);
+    transition: transform 0.45s ease;
+    z-index: 1;
+  }
+
+  &.is-visible &__panel {
+    transform: scale(1) translateY(0);
+  }
+
+  &__hint {
+    color: rgba(255, 255, 255, 0.55);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    margin: 0.85rem 0 0;
+    text-align: center;
+    text-transform: lowercase;
+  }
+}
+
+.polaroid-flip {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: block;
+  height: clamp(220px, 52vw, 300px);
+  margin: 0;
+  padding: 0;
+  perspective: 1000px;
+  width: clamp(200px, 48vw, 280px);
+
+  &__inner {
+    display: block;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s ease;
+    width: 100%;
+  }
+
+  &.is-flipped &__inner {
+    transform: rotateY(180deg);
+  }
+
+  &__face {
+    backface-visibility: hidden;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 4px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+    display: block;
+    height: 100%;
+    left: 0;
+    padding: 10px 10px 28px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    &--back {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &__img {
+    aspect-ratio: 1;
+    background-image: var(--photo);
+    background-position: center;
+    background-size: cover;
+    border-radius: 1px;
+    display: block;
+    width: 100%;
+  }
+
+  &__message {
+    align-items: center;
+    color: #2a1a35;
+    display: flex;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3.8vw, 1.35rem);
+    font-style: italic;
+    height: 100%;
+    justify-content: center;
+    line-height: 1.45;
+    padding: 0.5rem;
+    text-align: center;
+    white-space: pre-line;
+    width: 100%;
+  }
+}
+
+// --- UI ---
+
+.tap-reveal {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.7rem, 2.2vw, 0.85rem);
+  font-weight: 300;
+  left: 50%;
+  letter-spacing: 0.2em;
+  padding: 0.75rem 1.25rem;
+  position: fixed;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
+  text-transform: lowercase;
+  top: 0;
+  transform: translateX(-50%);
+  transition: color 0.3s ease, opacity 0.4s ease;
+  z-index: 30;
+
+  &:hover {
+    color: $accent;
+  }
+
+  &:focus-visible {
+    color: $accent;
+    outline: 2px solid $accent;
+    outline-offset: 4px;
+  }
+
+  &.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.message-card {
+  align-items: center;
+  background: rgba(10, 4, 20, 0.78);
+  display: flex;
+  height: 100dvh;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  padding: 1.5rem;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: opacity 0.45s ease;
+  visibility: hidden;
+  width: 100vw;
+  z-index: 40;
+
+  &[hidden] {
+    display: none !important;
+  }
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  &__inner {
+    backdrop-filter: blur(12px);
+    background: rgba(30, 14, 42, 0.92);
+    border: 1px solid rgba(212, 184, 255, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+    max-height: min(85dvh, 640px);
+    max-width: min(92vw, 580px);
+    -ms-overflow-style: none;
+    overflow-y: auto;
+    padding: 2rem 2rem 1.5rem;
+    scrollbar-width: none;
+    text-align: center;
+    transform: translateY(12px);
+    transition: transform 0.45s ease;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &.is-visible &__inner {
+    transform: translateY(0);
+  }
+
+  &__text {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3.6vw, 1.25rem);
+    font-style: normal;
+    line-height: 1.65;
+    margin: 0 0 1.5rem;
+    text-align: left;
+
+    p {
+      margin: 0 0 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__epigraph {
+    color: $accent;
+    font-size: clamp(1.15rem, 4.2vw, 1.45rem);
+    font-style: italic;
+    margin-bottom: 0.35rem !important;
+    text-align: center;
+  }
+
+  &__lead {
+    font-style: italic;
+    margin-bottom: 1.25rem !important;
+    text-align: center;
+  }
+
+  &__refrain {
+    color: rgba(212, 184, 255, 0.95);
+    font-style: italic;
+    margin: 1.25rem 0 !important;
+    text-align: center;
+  }
+
+  &__signoff {
+    font-style: italic;
+    margin-top: 1.5rem !important;
+    text-align: right;
+  }
+
+  &__close {
+    background: transparent;
+    border: 1px solid rgba(212, 184, 255, 0.35);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    padding: 0.55rem 1.25rem;
+    text-transform: uppercase;
+    transition: border-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      border-color: $accent;
+      color: #fff;
+    }
+  }
+}
+
+@media (orientation: landscape) {
+  .stage,
+  .sky-static__track {
+    height: min(100dvh, calc(100vw * #{$frame-h} / #{$frame-w}));
+  }
+}
