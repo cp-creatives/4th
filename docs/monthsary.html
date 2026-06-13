@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Happy 4th Monthsary, Joan Lucille</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="monthsary.css">
+  <script>
+    if (sessionStorage.getItem('monthsary_unlock') !== '1') {
+      window.location.replace('index.html');
+    }
+  </script>
+</head>
+<body class="monthsary-body">
+  <script>
+    if (sessionStorage.getItem('monthsary_fade_in') === '1') {
+      sessionStorage.removeItem('monthsary_fade_in');
+      document.body.classList.add('is-entering', 'is-reveal-pending');
+    }
+  </script>
+
+  <audio id="bg-music" src="Pahintulot.mp3" loop preload="auto"></audio>
+
+  <div class="quote-splash" id="quote-splash" hidden>
+    <div class="quote-splash__slides">
+      <blockquote class="quote-splash__text" hidden>Giliw, kung pahihintulutan mo ako</blockquote>
+      <blockquote class="quote-splash__text" hidden>Ipagkakatiwala ko sana sa 'yo ang puso ko</blockquote>
+      <blockquote class="quote-splash__text" hidden>Happy Monthsary, Mahal</blockquote>
+    </div>
+    <p class="quote-splash__hint" id="quote-hint" hidden>tap</p>
+  </div>
+
+  <button type="button" class="tap-reveal" id="reveal-trigger" aria-label="Tap to reveal message">
+    tap to reveal
+  </button>
+
+  <div class="sky-static" aria-hidden="true">
+    <div class="sky-static__track" style="--tile: url('images/monthsary/scene/super-b/sky.png')"></div>
+  </div>
+
+  <main id="monthsary" class="monthsary">
+    <div class="stage">
+      <div id="scene" class="scene"
+        data-friction-x="0.08"
+        data-friction-y="0.08"
+        data-scalar-x="22"
+        data-scalar-y="22"
+        data-limit-x="55"
+        data-limit-y="55"
+        data-relative-input="true"
+        data-clip-relative-input="true">
+
+        <div class="layer layer--blend layer--far-clouds" data-depth="0.05" aria-hidden="true">
+          <div class="tile-strip tile-strip--far-clouds" style="--tile: url('images/monthsary/scene/godot/far-clouds.png')"></div>
+        </div>
+
+        <div class="layer layer--mountains" data-depth="0.20" aria-hidden="true">
+          <div class="tile-strip" style="--tile: url('images/monthsary/scene/godot/far-mountains.png')"></div>
+        </div>
+
+        <div class="layer layer--mountains" data-depth="0.35" aria-hidden="true">
+          <div class="tile-strip" style="--tile: url('images/monthsary/scene/super-b/middle-mountains.png')"></div>
+        </div>
+
+        <div class="layer layer--blend layer--near-clouds" data-depth="0.50" aria-hidden="true">
+          <div class="tile-strip tile-strip--near-clouds" style="--tile: url('images/monthsary/scene/godot/near-clouds.png')"></div>
+        </div>
+
+        <div class="layer layer--blend layer--myst" data-depth="0.62" aria-hidden="true">
+          <div class="tile-strip" style="--tile: url('images/monthsary/scene/super-b/myst.png')"></div>
+        </div>
+
+        <div class="layer layer--trees layer--trees-1" data-depth-x="0.78" data-depth-y="0.92" aria-hidden="true">
+          <div class="tile-strip tile-strip--trees" style="--tile: url('images/monthsary/scene/super-b/far-trees.png')"></div>
+        </div>
+
+        <div class="layer layer--trees layer--trees-2" data-depth-x="0.88" data-depth-y="0.92" aria-hidden="true">
+          <div class="tile-strip tile-strip--trees" style="--tile: url('images/monthsary/scene/godot/trees.png')"></div>
+        </div>
+
+        <div class="layer layer--trees layer--trees-3" data-depth-x="1.00" data-depth-y="0.92" aria-hidden="true">
+          <div class="tile-strip tile-strip--trees tile-strip--wide" style="--tile: url('images/monthsary/scene/super-b/near-trees.png')"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Outside parallax + stage — tile strips can't block these clicks -->
+    <div id="polaroid-layer" class="polaroid-layer">
+      <div class="polaroid-group" id="polaroid-group-1">
+        <button type="button" class="polaroid polaroid--1" id="photo-frame"
+          data-photo="images/monthsary/photo.jpg"
+          data-message="for as long&#10;as the sun sets&#10;and the moon rises&#10;it is you&#10;that i want&#10;in all of my tomorrows">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="polaroid polaroid--6"
+          data-photo="images/monthsary/photo6.jpg"
+          data-message="i hope&#10;life is kind enough&#10;to let me keep you">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="polaroid-group" id="polaroid-group-2">
+        <button type="button" class="polaroid polaroid--2"
+          data-photo="images/monthsary/photo2.jpg"
+          data-message="i found you&#10;without looking,&#10;and love you&#10;without trying">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="polaroid polaroid--3"
+          data-photo="images/monthsary/photo3.jpg"
+          data-message="to exist with you&#10;has been my greatest privilege ">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="polaroid polaroid--7"
+          data-photo="images/monthsary/photo7.jpg"
+          data-message="i look at you and i'm home">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="polaroid polaroid--8"
+          data-photo="images/monthsary/photo8.jpg"
+          data-message="thank you to the stars&#10;to the twists and turns of fate&#10;that presented with the gift of you">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="polaroid-group" id="polaroid-group-3">
+        <button type="button" class="polaroid polaroid--4"
+          data-photo="images/monthsary/photo4.JPG"
+          data-message="you're so&#10;intertwined in my soul&#10;that i cannot fathom a&#10;morning without you">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="polaroid polaroid--5"
+          data-photo="images/monthsary/photo5.jpg"
+          data-message="i love you till the oceans run dry">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="polaroid polaroid--9"
+          data-photo="images/monthsary/photo9.jpg"
+          data-message="for all the things my hands&#10;have held, the best by far is&#10;you">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="polaroid polaroid--10"
+          data-photo="images/monthsary/photo10.jpg"
+          data-message="i wont love you quietely. the world&#10;deserves to know it's you">
+          <span class="polaroid__img" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div id="photo-preload" hidden aria-hidden="true"></div>
+
+  <div class="polaroid-modal" id="polaroid-modal" hidden>
+    <button type="button" class="polaroid-modal__backdrop" id="polaroid-modal-backdrop" aria-label="Close polaroid"></button>
+    <div class="polaroid-modal__panel" role="dialog" aria-modal="true" aria-labelledby="polaroid-modal-title">
+      <p class="polaroid-modal__title" id="polaroid-modal-title" hidden>Polaroid</p>
+      <button type="button" class="polaroid-flip" id="polaroid-flip" aria-label="Flip polaroid to read message">
+        <span class="polaroid-flip__inner">
+          <span class="polaroid-flip__face polaroid-flip__face--front">
+            <span class="polaroid-flip__img" id="polaroid-modal-img"></span>
+          </span>
+          <span class="polaroid-flip__face polaroid-flip__face--back">
+            <span class="polaroid-flip__message" id="polaroid-modal-message"></span>
+          </span>
+        </span>
+      </button>
+      <p class="polaroid-modal__hint">tap polaroid to flip</p>
+    </div>
+  </div>
+
+  <div class="message-card" id="message-card" hidden>
+    <div class="message-card__inner">
+      <div class="message-card__text" id="message-text">
+        <p class="message-card__epigraph">"Patingin, pang motivate lang"</p>
+        <p class="message-card__lead">Mga salitang madalas kong bitawan.</p>
+        <p>Patingin ng ngiti mong sa akin ay nagpapagaan,<br>
+        Patingin ng luha mong handa ko namang punasan.<br>
+        Patingin ng buong ikaw — mula noon hanggang kailanman.</p>
+        <p class="message-card__refrain">Pang motivate lang.</p>
+        <p>Sa loob ng apat na buwan, Jo, hindi ko alam kung paano ko maipararamdam sa 'yo 'yung gaan na binigay mo. P'wede pala maging pahingahan ang isang tao. Tuwing magkasama tayo, baby, napapagaan mo ang isipan ko. Na para bang bumubulong na, "sa wakas, makakapagpahinga na rin".</p>
+        <p>Sa ingay ng mundo,<br>
+        Patingin ng bawat sugat at tago mong kuwento,<br>
+        Patingin kung paano ka magmahal nang ganito,<br>
+        Patingin kung paano ko bubuuin ang mundo mo.</p>
+        <p class="message-card__refrain">Pang motivate lang.</p>
+        <p>Never kong inakala na magmamahal ako ng isang pogi, maganda, resilient, consistent, hardworking, passionate, at masungit na tao. Sa bawat problema na pinagdadaanan mo, handa ako makinig. Mananatiling bukas ang mga kamay ko na samahan ka sa alon ng buhay. Sa saya, lungkot, at tampuhan — ikaw at ikaw lang ang nanaisin kong makasama.</p>
+        <p>Patingin ng bukas na kasama kang maglakbay,<br>
+        Patingin ng kamay mong sa akin ay umaalalay.<br>
+        Patingin kung paano mo binigayang-buhay ang aking buhay.</p>
+        <p class="message-card__refrain">Pang motivate lang.</p>
+        <p>Kung pahihintulutan ako ng kalangitan,<br>
+        Hahanap-hanapin kita sa bawat buhay na ipagkakaloob sa atin.</p>
+        <p>Dahil mahal ko,<br>
+        Isang kang kahilingang natupad sa libong dandelyon na aking hinilingan.</p>
+        <p class="message-card__signoff">Nagmamahal,<br>Chei</p>
+      </div>
+      <button type="button" class="message-card__close" id="message-close" aria-label="Close message">close</button>
+    </div>
+  </div>
+
+  <script src="./parallax.js"></script>
+  <script>
+    var quoteSplash = document.getElementById('quote-splash');
+    var quoteSlides = quoteSplash.querySelectorAll('.quote-splash__text');
+    var quoteHint = document.getElementById('quote-hint');
+    var bgMusic = document.getElementById('bg-music');
+    var quoteStep = -1;
+    var quoteTransitioning = false;
+    var quoteSyncActive = false;
+    var quoteSyncFlags = { left0: false, left1: false, ready2: false };
+
+    var QUOTE_TIMES = {
+      firstShow: 14,
+      firstHide: 22,
+      secondShow: 27,
+      secondHide: 36,
+      thirdShow: 38
+    };
+
+    function stopQuoteSync() {
+      quoteSyncActive = false;
+    }
+
+    function prepareQuoteWords(slide, slideIndex) {
+      if (slide.dataset.prepared === '1') {
+        return;
+      }
+      var text = slide.getAttribute('data-quote') || slide.textContent.trim();
+      slide.setAttribute('data-quote', text);
+      slide.textContent = '';
+      if (slideIndex < 2) {
+        slide.classList.add('quote-splash__text--slow-lead');
+      }
+      var wordIndex = 0;
+      text.split(/(\s+)/).forEach(function (part) {
+        if (/^\s+$/.test(part)) {
+          slide.appendChild(document.createTextNode(part));
+          return;
+        }
+        var word = document.createElement('span');
+        word.className = 'quote-splash__word';
+        if (wordIndex === 0 && slideIndex < 2) {
+          word.classList.add('quote-splash__word--lead');
+        }
+        word.textContent = part;
+        word.style.setProperty('--word-i', String(wordIndex));
+        wordIndex += 1;
+        slide.appendChild(word);
+      });
+      slide.dataset.prepared = '1';
+    }
+
+    function resetQuoteSlide(slide) {
+      var text = slide.getAttribute('data-quote');
+      if (text) {
+        slide.textContent = text;
+      }
+      slide.classList.remove('quote-splash__text--slow-lead');
+      delete slide.dataset.prepared;
+    }
+
+    function showQuoteSlide(index) {
+      quoteTransitioning = true;
+      quoteSlides.forEach(function (slide, i) {
+        slide.classList.remove('is-active', 'is-leaving');
+        slide.hidden = i !== index;
+      });
+      quoteStep = index;
+      prepareQuoteWords(quoteSlides[index], index);
+      requestAnimationFrame(function () {
+        quoteSlides[index].classList.add('is-active');
+        quoteTransitioning = false;
+      });
+    }
+
+    function leaveQuoteSlide(index) {
+      if (quoteSlides[index].classList.contains('is-leaving')) {
+        return;
+      }
+      quoteTransitioning = true;
+      quoteSlides[index].classList.add('is-leaving');
+      window.setTimeout(function () {
+        quoteSlides[index].classList.remove('is-active', 'is-leaving');
+        quoteSlides[index].hidden = true;
+        quoteTransitioning = false;
+      }, 1000);
+    }
+
+    function syncQuotesToMusic() {
+      if (!quoteSyncActive) {
+        return;
+      }
+
+      var time = bgMusic.currentTime;
+
+      if (time >= QUOTE_TIMES.firstShow && quoteStep < 0) {
+        showQuoteSlide(0);
+      }
+
+      if (time >= QUOTE_TIMES.firstHide && quoteStep === 0 && !quoteSyncFlags.left0) {
+        quoteSyncFlags.left0 = true;
+        leaveQuoteSlide(0);
+      }
+
+      if (time >= QUOTE_TIMES.secondShow && quoteStep < 1) {
+        showQuoteSlide(1);
+      }
+
+      if (time >= QUOTE_TIMES.secondHide && quoteStep === 1 && !quoteSyncFlags.left1) {
+        quoteSyncFlags.left1 = true;
+        leaveQuoteSlide(1);
+      }
+
+      if (time >= QUOTE_TIMES.thirdShow && quoteStep < 2) {
+        showQuoteSlide(2);
+      }
+
+      if (time >= QUOTE_TIMES.thirdShow && quoteStep === 2 && !quoteSyncFlags.ready2) {
+        quoteSyncFlags.ready2 = true;
+        quoteSplash.classList.add('is-tap-ready');
+        quoteHint.hidden = false;
+        return;
+      }
+
+      requestAnimationFrame(syncQuotesToMusic);
+    }
+
+    function startBackgroundMusic() {
+      bgMusic.currentTime = 0;
+      var playAttempt = bgMusic.play();
+      if (playAttempt && playAttempt.catch) {
+        playAttempt.catch(function () {
+          document.body.addEventListener('click', function resumeMusicOnce() {
+            bgMusic.play().catch(function () {});
+          }, { once: true });
+        });
+      }
+    }
+
+    function finishQuoteReveal() {
+      if (!document.body.classList.contains('is-reveal-pending') || quoteTransitioning || quoteStep !== 2) {
+        return;
+      }
+      quoteTransitioning = true;
+      stopQuoteSync();
+      quoteSplash.classList.remove('is-tap-ready');
+      quoteSplash.classList.add('is-leaving');
+      document.body.classList.remove('is-reveal-pending');
+      quoteHint.hidden = true;
+      window.setTimeout(function () {
+        quoteSplash.hidden = true;
+        quoteSplash.classList.remove('is-leaving', 'is-visible', 'is-tap-ready');
+        quoteSlides.forEach(function (slide) {
+          slide.classList.remove('is-active', 'is-leaving');
+          slide.hidden = true;
+          resetQuoteSlide(slide);
+        });
+        quoteStep = -1;
+        quoteSyncFlags = { left0: false, left1: false, ready2: false };
+        quoteTransitioning = false;
+      }, 850);
+    }
+
+    function startQuoteReveal() {
+      quoteSplash.hidden = false;
+      quoteHint.hidden = true;
+      quoteSplash.classList.remove('is-tap-ready');
+      quoteSyncFlags = { left0: false, left1: false, ready2: false };
+      quoteStep = -1;
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          document.body.classList.add('is-visible');
+          quoteSplash.classList.add('is-visible');
+        });
+      });
+
+      startBackgroundMusic();
+      quoteSyncActive = true;
+      requestAnimationFrame(syncQuotesToMusic);
+
+      quoteSplash.addEventListener('click', function () {
+        if (quoteSplash.classList.contains('is-tap-ready')) {
+          finishQuoteReveal();
+        }
+      });
+    }
+
+    if (document.body.classList.contains('is-entering')) {
+      if (document.body.classList.contains('is-reveal-pending')) {
+        startQuoteReveal();
+      } else {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            document.body.classList.add('is-visible');
+          });
+        });
+      }
+    }
+
+    var scene = document.getElementById('scene');
+    var parallax = new Parallax(scene);
+
+    var revealTrigger = document.getElementById('reveal-trigger');
+    var messageCard = document.getElementById('message-card');
+    var messageClose = document.getElementById('message-close');
+    var photoPreload = document.getElementById('photo-preload');
+    var polaroidLayer = document.getElementById('polaroid-layer');
+    var polaroids = polaroidLayer.querySelectorAll('.polaroid');
+    var polaroidMotionSync = [
+      { group: document.getElementById('polaroid-group-1'), layer: document.querySelector('.layer--trees-1') },
+      { group: document.getElementById('polaroid-group-2'), layer: document.querySelector('.layer--trees-2') },
+      { group: document.getElementById('polaroid-group-3'), layer: document.querySelector('.layer--trees-3') }
+    ];
+    var polaroidModal = document.getElementById('polaroid-modal');
+    var polaroidModalBackdrop = document.getElementById('polaroid-modal-backdrop');
+    var polaroidFlip = document.getElementById('polaroid-flip');
+    var polaroidModalMessage = document.getElementById('polaroid-modal-message');
+
+    var polaroidModalImg = document.getElementById('polaroid-modal-img');
+
+    function setPolaroidPhoto(polaroid, src) {
+      polaroid.style.setProperty('--photo', "url('" + src + "')");
+    }
+
+    function markPolaroidPhotoMissing(polaroid) {
+      polaroid.classList.add('is-placeholder');
+    }
+
+    function initPolaroidPhotos() {
+      var seen = {};
+      polaroids.forEach(function (polaroid) {
+        var src = polaroid.getAttribute('data-photo');
+        if (!src) {
+          markPolaroidPhotoMissing(polaroid);
+          return;
+        }
+        setPolaroidPhoto(polaroid, src);
+        if (seen[src]) {
+          return;
+        }
+        seen[src] = true;
+        var img = new Image();
+        img.addEventListener('error', function () {
+          polaroids.forEach(function (frame) {
+            if (frame.getAttribute('data-photo') === src) {
+              markPolaroidPhotoMissing(frame);
+            }
+          });
+        });
+        img.src = src;
+        photoPreload.appendChild(img);
+      });
+    }
+
+    initPolaroidPhotos();
+
+    var polaroidBaseTilt = {
+      'polaroid--1': -11,
+      'polaroid--2': 14,
+      'polaroid--3': -8,
+      'polaroid--4': 9,
+      'polaroid--5': -13,
+      'polaroid--6': 11,
+      'polaroid--7': -15,
+      'polaroid--8': 7,
+      'polaroid--9': -10,
+      'polaroid--10': 12
+    };
+
+    function initPolaroidSwing() {
+      polaroids.forEach(function (polaroid) {
+        var base = 0;
+        var className;
+        for (className in polaroidBaseTilt) {
+          if (polaroid.classList.contains(className)) {
+            base = polaroidBaseTilt[className];
+            break;
+          }
+        }
+        var amount = 4 + Math.random() * 5;
+        var duration = 3.5 + Math.random() * 4.5;
+        var phase = Math.random() < 0.5 ? 1 : -1;
+        // Negative delay = already mid-swing on load (no staggered wait)
+        var phaseOffset = -(Math.random() * duration);
+
+        polaroid.style.setProperty('--swing-base', base);
+        polaroid.style.setProperty('--swing-amount', amount);
+        polaroid.style.setProperty('--swing-phase', phase);
+        polaroid.style.setProperty('--swing-duration', duration + 's');
+        polaroid.style.setProperty('--swing-delay', phaseOffset + 's');
+      });
+    }
+
+    initPolaroidSwing();
+
+    function openPolaroidModal(polaroid) {
+      var message = polaroid.getAttribute('data-message') || '';
+      var photo = polaroid.getAttribute('data-photo');
+      polaroidModalMessage.textContent = message;
+      if (photo) {
+        polaroidModalImg.style.backgroundImage = "url('" + photo + "')";
+      }
+      polaroidFlip.classList.remove('is-flipped');
+      polaroidModal.hidden = false;
+      requestAnimationFrame(function () {
+        polaroidModal.classList.add('is-visible');
+      });
+    }
+
+    function closePolaroidModal() {
+      polaroidModal.classList.remove('is-visible');
+      polaroidFlip.classList.remove('is-flipped');
+      window.setTimeout(function () {
+        polaroidModal.hidden = true;
+      }, 450);
+    }
+
+    function syncPolaroidMotion() {
+      polaroidMotionSync.forEach(function (entry) {
+        if (entry.group && entry.layer) {
+          entry.group.style.transform = entry.layer.style.transform || '';
+        }
+      });
+      requestAnimationFrame(syncPolaroidMotion);
+    }
+
+    requestAnimationFrame(syncPolaroidMotion);
+
+    function activatePolaroid(event) {
+      var polaroid = event.target.closest('.polaroid');
+      if (!polaroid || !polaroidLayer.contains(polaroid)) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      openPolaroidModal(polaroid);
+    }
+
+    polaroidLayer.addEventListener('click', activatePolaroid);
+
+    polaroidFlip.addEventListener('click', function () {
+      polaroidFlip.classList.toggle('is-flipped');
+    });
+
+    polaroidModalBackdrop.addEventListener('click', closePolaroidModal);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !polaroidModal.hidden) {
+        closePolaroidModal();
+      }
+    });
+
+    function revealMessage() {
+      messageCard.hidden = false;
+      requestAnimationFrame(function () {
+        messageCard.classList.add('is-visible');
+        revealTrigger.classList.add('is-hidden');
+      });
+    }
+
+    function hideMessage() {
+      messageCard.classList.remove('is-visible');
+      revealTrigger.classList.remove('is-hidden');
+      window.setTimeout(function () {
+        messageCard.hidden = true;
+      }, 450);
+    }
+
+    revealTrigger.addEventListener('click', revealMessage);
+    messageClose.addEventListener('click', hideMessage);
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Enter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="gate.css">
+</head>
+<body class="gate-body">
+  <main class="gate">
+    <p class="gate__hearts" aria-hidden="true">♡ ♡ ♡</p>
+    <h1 class="gate__question">Our dog in stardew?</h1>
+    <form class="gate__form" id="gate-form" autocomplete="off">
+      <input class="gate__input" id="gate-answer" type="password" name="answer"
+        placeholder="type your answer here" required autofocus>
+      <button class="gate__submit" type="submit">Enter</button>
+    </form>
+    <p class="gate__error" id="gate-error" role="alert">hmm, not quite — try again ♡</p>
+  </main>
+
+  <script>
+    (function () {
+      // SHA-256 hash only — password is not stored in this repo
+      var PASSWORD_HASH = '2ea0d25e51920dc0ba247fcda7f514f3e8ad6234e704277036df405af860ed6c';
+      var UNLOCK_KEY = 'monthsary_unlock';
+      var FADE_IN_KEY = 'monthsary_fade_in';
+      var FADE_OUT_MS = 550;
+
+      if (sessionStorage.getItem(UNLOCK_KEY) === '1') {
+        window.location.replace('monthsary.html');
+        return;
+      }
+
+      function hashAnswer(value) {
+        var encoded = new TextEncoder().encode(value);
+        return crypto.subtle.digest('SHA-256', encoded).then(function (buffer) {
+          return Array.from(new Uint8Array(buffer))
+            .map(function (b) { return b.toString(16).padStart(2, '0'); })
+            .join('');
+        });
+      }
+
+      var form = document.getElementById('gate-form');
+      var input = document.getElementById('gate-answer');
+      var error = document.getElementById('gate-error');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        error.classList.remove('is-visible');
+
+        hashAnswer(input.value.trim()).then(function (digest) {
+          if (digest === PASSWORD_HASH) {
+            sessionStorage.setItem(UNLOCK_KEY, '1');
+            sessionStorage.setItem(FADE_IN_KEY, '1');
+            var primeMusic = new Audio('Pahintulot.mp3');
+            primeMusic.loop = true;
+            primeMusic.play().catch(function () {});
+            document.body.classList.add('is-leaving');
+            window.setTimeout(function () {
+              window.location.replace('monthsary.html');
+            }, FADE_OUT_MS);
+            return;
+          }
+          error.classList.add('is-visible');
+          input.value = '';
+          input.focus();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
