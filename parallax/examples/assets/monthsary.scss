@@ -68,10 +68,6 @@ $quote-word-lead-gap: 5s;
   &.is-visible {
     opacity: 1;
     pointer-events: none;
-
-    &.is-tap-ready {
-      pointer-events: auto;
-    }
   }
 
   &.is-leaving {
@@ -144,15 +140,6 @@ $quote-word-lead-gap: 5s;
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  &__hint {
-    color: rgba(255, 255, 255, 0.45);
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    margin: 1.75rem 0 0;
-    text-transform: lowercase;
   }
 }
 
@@ -323,6 +310,77 @@ $quote-word-lead-gap: 5s;
   will-change: transform;
 }
 
+.polaroid-slot {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  position: absolute;
+
+  &__hint {
+    color: rgba(255, 255, 255, 0.48);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    margin-top: 3px;
+    pointer-events: none;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.85);
+    text-transform: lowercase;
+    white-space: nowrap;
+  }
+
+  &--1 {
+    bottom: 13%;
+    left: 8%;
+  }
+
+  &--2 {
+    bottom: 23%;
+    right: 10%;
+  }
+
+  &--3 {
+    bottom: 4%;
+    left: 62%;
+  }
+
+  &--4 {
+    bottom: 18%;
+    left: 22%;
+  }
+
+  &--5 {
+    bottom: 7%;
+    left: 31%;
+  }
+
+  &--6 {
+    bottom: 14%;
+    left: 48%;
+  }
+
+  &--7 {
+    bottom: 21%;
+    left: 2%;
+  }
+
+  &--8 {
+    bottom: 4%;
+    right: 7%;
+  }
+
+  &--9 {
+    bottom: 17%;
+    right: 27%;
+  }
+
+  &--10 {
+    bottom: 10%;
+    left: 76%;
+  }
+}
+
 .polaroid {
   -webkit-tap-highlight-color: transparent;
   background: rgba(255, 255, 255, 0.92);
@@ -336,7 +394,7 @@ $quote-word-lead-gap: 5s;
   padding: 4px 4px 14px;
   animation: polaroid-swing var(--swing-duration, 5s) ease-in-out var(--swing-delay, 0s) infinite;
   pointer-events: auto;
-  position: absolute;
+  position: relative;
   touch-action: manipulation;
   transform-origin: 50% 100%;
   transition: box-shadow 0.2s ease;
@@ -378,62 +436,42 @@ $quote-word-lead-gap: 5s;
   }
 
   &--1 {
-    bottom: 13%;
-    left: 8%;
     width: 56px;
   }
 
   &--2 {
-    bottom: 23%;
-    right: 10%;
     width: 54px;
   }
 
   &--3 {
-    bottom: 4%;
-    left: 62%;
     width: 62px;
   }
 
   &--4 {
-    bottom: 18%;
-    left: 22%;
     width: 58px;
   }
 
   &--5 {
-    bottom: 7%;
-    left: 31%;
     width: 52px;
   }
 
   &--6 {
-    bottom: 14%;
-    left: 48%;
     width: 54px;
   }
 
   &--7 {
-    bottom: 21%;
-    left: 2%;
     width: 50px;
   }
 
   &--8 {
-    bottom: 4%;
-    right: 7%;
     width: 56px;
   }
 
   &--9 {
-    bottom: 17%;
-    right: 27%;
     width: 52px;
   }
 
   &--10 {
-    bottom: 10%;
-    left: 76%;
     width: 58px;
   }
 }
