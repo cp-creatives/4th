@@ -63,9 +63,6 @@
   opacity: 1;
   pointer-events: none;
 }
-.quote-splash.is-visible.is-tap-ready {
-  pointer-events: auto;
-}
 .quote-splash.is-leaving {
   opacity: 0;
   pointer-events: none;
@@ -152,14 +149,6 @@
     -webkit-transform: translateY(0);
             transform: translateY(0);
   }
-}
-.quote-splash__hint {
-  color: rgba(255, 255, 255, 0.45);
-  font-family: "Outfit", sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  margin: 1.75rem 0 0;
-  text-transform: lowercase;
 }
 
 .sky-static {
@@ -333,6 +322,73 @@
   will-change: transform;
 }
 
+.polaroid-slot {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  pointer-events: none;
+  position: absolute;
+}
+.polaroid-slot__hint {
+  color: rgba(255, 255, 255, 0.48);
+  font-family: "Outfit", sans-serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  margin-top: 3px;
+  pointer-events: none;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.85);
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+.polaroid-slot--1 {
+  bottom: 13%;
+  left: 8%;
+}
+.polaroid-slot--2 {
+  bottom: 23%;
+  right: 10%;
+}
+.polaroid-slot--3 {
+  bottom: 4%;
+  left: 62%;
+}
+.polaroid-slot--4 {
+  bottom: 18%;
+  left: 22%;
+}
+.polaroid-slot--5 {
+  bottom: 7%;
+  left: 31%;
+}
+.polaroid-slot--6 {
+  bottom: 14%;
+  left: 48%;
+}
+.polaroid-slot--7 {
+  bottom: 21%;
+  left: 2%;
+}
+.polaroid-slot--8 {
+  bottom: 4%;
+  right: 7%;
+}
+.polaroid-slot--9 {
+  bottom: 17%;
+  right: 27%;
+}
+.polaroid-slot--10 {
+  bottom: 10%;
+  left: 76%;
+}
+
 .polaroid {
   -webkit-tap-highlight-color: transparent;
   background: rgba(255, 255, 255, 0.92);
@@ -348,7 +404,7 @@
   -webkit-animation: polaroid-swing var(--swing-duration, 5s) ease-in-out var(--swing-delay, 0s) infinite;
           animation: polaroid-swing var(--swing-duration, 5s) ease-in-out var(--swing-delay, 0s) infinite;
   pointer-events: auto;
-  position: absolute;
+  position: relative;
   -ms-touch-action: manipulation;
       touch-action: manipulation;
   -webkit-transform-origin: 50% 100%;
@@ -390,53 +446,33 @@
   display: none;
 }
 .polaroid--1 {
-  bottom: 13%;
-  left: 8%;
   width: 56px;
 }
 .polaroid--2 {
-  bottom: 23%;
-  right: 10%;
   width: 54px;
 }
 .polaroid--3 {
-  bottom: 4%;
-  left: 62%;
   width: 62px;
 }
 .polaroid--4 {
-  bottom: 18%;
-  left: 22%;
   width: 58px;
 }
 .polaroid--5 {
-  bottom: 7%;
-  left: 31%;
   width: 52px;
 }
 .polaroid--6 {
-  bottom: 14%;
-  left: 48%;
   width: 54px;
 }
 .polaroid--7 {
-  bottom: 21%;
-  left: 2%;
   width: 50px;
 }
 .polaroid--8 {
-  bottom: 4%;
-  right: 7%;
   width: 56px;
 }
 .polaroid--9 {
-  bottom: 17%;
-  right: 27%;
   width: 52px;
 }
 .polaroid--10 {
-  bottom: 10%;
-  left: 76%;
   width: 58px;
 }
 
