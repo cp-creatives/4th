@@ -96,7 +96,6 @@
             data-message="for as long&#10;as the sun sets&#10;and the moon rises&#10;it is you&#10;that i want&#10;in all of my tomorrows">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
         <div class="polaroid-slot polaroid-slot--6">
           <button type="button" class="polaroid polaroid--6"
@@ -104,7 +103,6 @@
             data-message="i hope&#10;life is kind enough&#10;to let me keep you">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
       </div>
       <div class="polaroid-group" id="polaroid-group-2">
@@ -114,7 +112,6 @@
             data-message="i found you&#10;without looking,&#10;and love you&#10;without trying">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
         <div class="polaroid-slot polaroid-slot--3">
           <button type="button" class="polaroid polaroid--3"
@@ -122,7 +119,6 @@
             data-message="to exist with you&#10;has been my greatest privilege ">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
         <div class="polaroid-slot polaroid-slot--7">
           <button type="button" class="polaroid polaroid--7"
@@ -130,7 +126,6 @@
             data-message="i look at you and i'm home">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
         <div class="polaroid-slot polaroid-slot--8">
           <button type="button" class="polaroid polaroid--8"
@@ -138,7 +133,6 @@
             data-message="thank you to the stars&#10;to the twists and turns of fate&#10;that presented with the gift of you">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
       </div>
       <div class="polaroid-group" id="polaroid-group-3">
@@ -148,7 +142,6 @@
             data-message="you're so&#10;intertwined in my soul&#10;that i cannot fathom a&#10;morning without you">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
         <div class="polaroid-slot polaroid-slot--5">
           <button type="button" class="polaroid polaroid--5"
@@ -156,7 +149,6 @@
             data-message="i love you till the oceans run dry">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
         <div class="polaroid-slot polaroid-slot--9">
           <button type="button" class="polaroid polaroid--9"
@@ -164,7 +156,6 @@
             data-message="for all the things my hands&#10;have held, the best by far is&#10;you">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
         <div class="polaroid-slot polaroid-slot--10">
           <button type="button" class="polaroid polaroid--10"
@@ -172,7 +163,6 @@
             data-message="i wont love you quietely. the world&#10;deserves to know it's you">
             <span class="polaroid__img" aria-hidden="true"></span>
           </button>
-          <span class="polaroid-slot__hint">tap card</span>
         </div>
       </div>
     </div>
@@ -188,13 +178,13 @@
         <span class="polaroid-flip__inner">
           <span class="polaroid-flip__face polaroid-flip__face--front">
             <span class="polaroid-flip__img" id="polaroid-modal-img"></span>
+            <span class="polaroid-flip__hint">tap polaroid to flip</span>
           </span>
           <span class="polaroid-flip__face polaroid-flip__face--back">
             <span class="polaroid-flip__message" id="polaroid-modal-message"></span>
           </span>
         </span>
       </button>
-      <p class="polaroid-modal__hint">tap polaroid to flip</p>
     </div>
   </div>
 
@@ -259,6 +249,9 @@
       slide.textContent = '';
       if (slideIndex < 2) {
         slide.classList.add('quote-splash__text--slow-lead');
+        if (slideIndex === 1) {
+          slide.classList.add('quote-splash__text--slow-lead-wide');
+        }
       }
       var wordIndex = 0;
       text.split(/(\s+)/).forEach(function (part) {
@@ -284,7 +277,7 @@
       if (text) {
         slide.textContent = text;
       }
-      slide.classList.remove('quote-splash__text--slow-lead');
+      slide.classList.remove('quote-splash__text--slow-lead', 'quote-splash__text--slow-lead-wide');
       delete slide.dataset.prepared;
     }
 
